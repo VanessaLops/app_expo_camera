@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import { Alert } from "react-native";
-import { AntDesign } from "@expo/vector-icons";
 
 import {
   Container,
@@ -11,15 +10,11 @@ import {
   ButtonText,
   ButtonRegister,
   TextDecoration,
-} from "./styles.ts";
+} from "./styles";
 
-import logo from "../../assets/logo.png";
-import background from "../../assets/background.jpg";
+import { useAuth } from "../../context/auth";
 
-import { useAuth, signInWithGoogle } from "../../context/auth";
-import SignInSocialButton from "../../components/SignInSocialButton";
-
-export const SignIn: React.FC  = () => {
+export const SignIn: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { signInWithGoogle } = useAuth();
 

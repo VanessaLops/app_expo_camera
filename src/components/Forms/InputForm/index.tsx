@@ -1,20 +1,18 @@
 import React, { useState } from "react";
 import { TextInputProps } from "react-native";
 import { useTheme } from "styled-components";
-import { RFValue } from "react-native-responsive-fontsize";
-import { Feather } from "@expo/vector-icons";
 
-import { Container, IconContainer, InputText, Error } from "./styles";
+import { Container, InputText, Error } from "./styles";
 
 interface InputProps extends TextInputProps {
   value?: string;
 }
 
-export const InputForm: React.FC<InputProps> = ({ value, error, ...rest }) => {
-  const { colors } = useTheme();
+export const InputForm: React.FC<InputProps> = ({ value, ...rest }) => {
+  //const { colors } = useTheme();
 
   const [isFocused, setIsFocused] = useState(false);
-  const [isFilled, setIsFilled] = useState(false);
+  // const [isFilled, setIsFilled] = useState(false);
 
   function handleInputFocus() {
     return setIsFocused(true);
@@ -22,7 +20,7 @@ export const InputForm: React.FC<InputProps> = ({ value, error, ...rest }) => {
 
   function handleInputBlur() {
     return setIsFocused(false);
-    setIsFilled(!!value);
+    // setIsFilled(!!value);
   }
 
   return (
@@ -34,7 +32,6 @@ export const InputForm: React.FC<InputProps> = ({ value, error, ...rest }) => {
         value={value}
         {...rest}
       />
-      {error && <Error>{error}</Error>}
     </Container>
   );
 };

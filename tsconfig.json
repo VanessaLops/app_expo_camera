@@ -1,6 +1,13 @@
 {
-  "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict": true
-  }
+    "outDir": "./build/",
+    "strict": true,
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "module": "commonjs",
+    "target": "es5",
+    "jsx": "react"
+  },
+  "extends": "expo/tsconfig.base",
+  "files": ["./App.tsx"]
 }

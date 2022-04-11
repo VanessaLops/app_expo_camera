@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
-import { Picker as SelectPicker, Picker } from "@react-native-picker/picker";
+import { Picker as SelectPicker } from "@react-native-picker/picker";
 
 export const Container = styled.View`
   flex: 1;
@@ -64,6 +64,7 @@ export const ImagePicker = styled.Image`
   margin-top: ${RFValue(10)}px;
 `;
 
+
 export const ButtonCameraReverse = styled.TouchableOpacity`
   position: absolute;
   align-items: center;
@@ -73,7 +74,7 @@ export const ButtonCameraReverse = styled.TouchableOpacity`
   justify-content: center;
   border-radius: ${RFValue(15)}px;
   margin-top: ${RFValue(290)}px;
-  background-color: ${({ theme }) => theme.colors.secondary};
+  background-color: ${({ theme }): any => theme.colors.secondary};
 `;
 export const ButtonCamera = styled.TouchableOpacity`
   position: absolute;
