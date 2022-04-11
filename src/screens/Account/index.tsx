@@ -10,6 +10,7 @@ import { Camera } from 'expo-camera';
 import * as DocumentPicker from 'expo-document-picker';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Button } from '../../components/Forms/Button';
 import {
   ScrollView,
   Text,
@@ -28,10 +29,8 @@ import api from '../../services/api';
 
 import {
   Container,
-  Register,
   Title,
   SubTitle,
-  ButtonText,
   InputArea,
   PickerContainer,
   ImagePicker as PickerImage,
@@ -64,15 +63,13 @@ export const Account: React.FC<DateProps> = ({ name, email, handleSubmit }) => {
   //Utilização da camera
   const camRef = useRef(null);
   const [image, setImage] = useState(null);
-  const [imageArray, setImageArray] = useState([]);
   const [document, setDocument] = useState(null);
-  const [documentArray, setDocumentArray] = useState([]);
-
-  const [type, setType] = useState(Camera.Constants.Type.back);
-  const [hasPermission, setHaspermission] = useState<boolean | null>(null);
   const [open, setOpen] = useState<boolean>(false);
   const [openCamera, setOpenCamera] = useState(false);
-  //const showHideCamera = () => setOpenCamera(true)
+  const [imageArray, setImageArray] = useState([]);
+  const [type, setType] = useState(Camera.Constants.Type.back);
+  const [documentArray, setDocumentArray] = useState<string[]>([]);
+  const [hasPermission, setHaspermission] = useState<boolean | null>(null);
 
   //Carregar dados quando o aplicativo for iniciado
   useEffect(() => {
@@ -143,25 +140,25 @@ export const Account: React.FC<DateProps> = ({ name, email, handleSubmit }) => {
   //TIRAR FOTO
   async function _takePicture() {
     if (camRef) {
-      const data = await camRef.current.takePictureAsync();
+      const data = await camRef.current?.takePictureAsync();
       setImage(data.uri);
       setImageArray([...imageArray, data.uri]);
       setOpen(true);
     }
   }
-
- 
-
-
-  async function _savepickDocument() {
-    try {
-      await AsyncStorage.setItem('@documents', `${document}`);
-    } catch (err) {
-      console.log(err);
-    }
-
-    Keyboard.dismiss();
+  {
+    console.log('retorno de imagem tirada ' + image);
   }
+
+  // async function _savepickDocument() {
+  //   try {
+  //     await AsyncStorage.setItem('@documents', `${document}`);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+
+  //   Keyboard.dismiss();
+  // }
 
   //UTILIZAÇÃO DE DOCUMENTOS
   async function _pickDocument() {
@@ -169,9 +166,7 @@ export const Account: React.FC<DateProps> = ({ name, email, handleSubmit }) => {
       type: 'application/pdf',
       copyToCacheDirectory: true,
     });
-    // setDocumentArray([...documentArray, result.uri]);
-    setDocumentArray([...documentArray, result]);
-    _savepickDocument();
+    setDocumentArray([...documentArray, result.uri]);
   }
 
   //SALVANDO A IMAGEM DEPOIS E CAPTURA-LA
@@ -186,7 +181,7 @@ export const Account: React.FC<DateProps> = ({ name, email, handleSubmit }) => {
   }
 
   // REMOVENDO A IMAGEM
-  async function _removetakePicture(removeImage, imageKey) {
+  async function _removetakePicture(imageKey) {
     const newImage = [...imageArray];
     const todoImage = imageArray.findIndex(
       deleteImage => deleteImage === imageKey,
@@ -196,7 +191,7 @@ export const Account: React.FC<DateProps> = ({ name, email, handleSubmit }) => {
   }
 
   // REMOVENDO DOCUMENTO
-  async function _removepickDocument(removeDocument, documentKey) {
+  async function _removepickDocument(documentKey) {
     const newDocument = [...documentArray];
     const todoDocument = documentArray.findIndex(
       deleteDocument => deleteDocument === documentKey,
@@ -264,12 +259,10 @@ export const Account: React.FC<DateProps> = ({ name, email, handleSubmit }) => {
                   </InputArea>
 
                   <InputArea>
-                    <Register
-                      type="submit"
+                    <Button
+                      title="Adicionar Imagem"
                       onPress={() => setOpenCamera(!openCamera)}
-                    >
-                      <ButtonText>Adicionar Imagem</ButtonText>
-                    </Register>
+                    />
                   </InputArea>
 
                   {openCamera ? (
@@ -277,7 +270,7 @@ export const Account: React.FC<DateProps> = ({ name, email, handleSubmit }) => {
                       <SafeAreaView
                         style={{
                           flex: 1,
-                          width: '80%',
+                          width: '100%',
                           height: 300,
                           justifyContent: 'center',
                           alignSelf: 'center',
@@ -321,7 +314,6 @@ export const Account: React.FC<DateProps> = ({ name, email, handleSubmit }) => {
                                   flex: 1,
                                   justifyContent: 'center',
                                   alignItems: 'center',
-                                  margin: 12,
                                 }}
                               >
                                 <TouchableOpacity
@@ -349,20 +341,26 @@ export const Account: React.FC<DateProps> = ({ name, email, handleSubmit }) => {
                       <ViewFlatlist>
                         {imageArray.length > 0 && (
                           <>
-                            <View style={{ height: 145, width: '100%' }}>
+                            <View
+                              style={{
+                                height: 142,
+                                width: '100%',
+                              }}
+                            >
                               <FlatList
                                 keyExtractor={(item, index) => item}
                                 horizontal={true}
                                 data={imageArray}
+                                showsHorizontalScrollIndicator={false}
                                 renderItem={({ item }) => (
                                   <>
                                     <TouchableOpacity
                                       onPress={_removetakePicture}
                                     >
                                       <Ionicons
-                                      // name="close"
-                                      // size={40}
-                                      // color="blue"
+                                        name="close"
+                                        size={40}
+                                        color="blue"
                                       />
                                     </TouchableOpacity>
                                     <Images source={{ uri: item }} />
@@ -377,15 +375,14 @@ export const Account: React.FC<DateProps> = ({ name, email, handleSubmit }) => {
                   ) : null}
 
                   <InputArea>
-                    <Register type="submit" onPress={_pickDocument}>
-                      <ButtonText>Adicionar Arquivo</ButtonText>
-                    </Register>
+                    <Button title="Adicionar Arquivo" onPress={_pickDocument} />
                   </InputArea>
                   {documentArray.length > 0 && (
                     <>
                       <View style={{ height: 145, width: '100%' }}>
                         <FlatList
                           horizontal={true}
+                          showsHorizontalScrollIndicator={false}
                           keyExtractor={(item, index) => {
                             return item;
                           }}
@@ -412,9 +409,7 @@ export const Account: React.FC<DateProps> = ({ name, email, handleSubmit }) => {
                 <></>
               ) : null}
 
-              <Register onPress={handleSubmit} type="submit">
-                <ButtonText>Cadastrar</ButtonText>
-              </Register>
+              <Button title="Cadastrar" onPress={handleSubmit} />
             </ScrollView>
           </>
         )}

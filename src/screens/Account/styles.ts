@@ -21,21 +21,7 @@ export const PickerContainer = styled(SelectPicker)`
   margin: 12px 12px 12px 12px;
 `;
 
-export const Register = styled.TouchableOpacity`
-  background-color: #a700fd;
-  flex-direction: row;
-  width: ${RFValue(240)}px;
-  height: ${RFValue(40)}px;
-  justify-content: center;
-  align-self: center;
-  align-items: center;
-  border-radius: ${RFValue(12)}px;
-  margin-top: ${RFValue(10)}px;
-`;
-export const ButtonText = styled.Text`
-  color: ${(props) => (props.button ? "red" : "#ffff")};
-  font-size: ${RFValue(15)}px;
-`;
+
 
 export const Title = styled.Text`
   color: ${(props) => (props.primary ? "#632E90" : "#FF4BBF")};
@@ -98,6 +84,6 @@ export const Images = styled.Image`
   width: ${RFValue(100)}px;
   height: ${RFValue(100)}%;
   border-radius: ${RFValue(10)}px;
-  margin: ${RFValue(100)}px;
+  margin: ${RFValue(10)}px;
 `;
 
