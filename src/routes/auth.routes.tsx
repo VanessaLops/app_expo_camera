@@ -1,10 +1,10 @@
-import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
+import React from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
 
-import { SignIn } from "../screens/SignIn";
-import { Account } from "../screens/Account";
-import { Confirmation } from "../components/Account/Confirmation";
-import { Dashboard } from "../screens/Dashboard";
+import { SignIn } from '../screens/SignIn';
+import { Account } from '../screens/Account';
+import { Confirmation } from '../components/Account/Confirmation';
+
 const Stack = createStackNavigator();
 
 export function AuthRoutes() {
@@ -15,17 +15,17 @@ export function AuthRoutes() {
       }}
     >
       <Stack.Screen
-        name={"SignIn"}
+        name={'SignIn'}
         options={{ headerShown: false }}
         component={SignIn}
       />
       <Stack.Screen
-        name={"Account"}
+        name={'Account'}
         options={{ headerShown: false }}
         component={Account}
       />
       <Stack.Screen
-        name={"Confirmation"}
+        name={'Confirmation'}
         options={{ headerShown: false }}
         component={Confirmation}
       />

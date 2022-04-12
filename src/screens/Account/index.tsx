@@ -211,7 +211,7 @@ export const Account: React.FC<DateProps> = () => {
         }) => (
           <>
             {/* {console.log(values)} */}
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
               <Title primary>
                 <Title>Cadastre</Title> sua empresa{'\n'} gratuitamente.
               </Title>

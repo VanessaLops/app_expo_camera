@@ -30,6 +30,7 @@ interface AuthContextData {
   signInWithGoogle: () => Promise<void>;
   signUp(credentials: User): Promise<void>;
   signOut(): void;
+  
 }
 
 interface AuthorizationResponse {
@@ -43,7 +44,7 @@ export const AuthContext = createContext({} as AuthContextData);
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User>({} as User);
-  const [isLoadingUserData, setIsLoadingUserData] = useState(true);
+  const [isLoadingUserData, setIsLoadingUserData] = useState<boolean>(true);
   const userStorageKey = "@mobile:user";
 
   async function signInWithGoogle() {
