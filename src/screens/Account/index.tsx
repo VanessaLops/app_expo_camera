@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
-import { Formik, ErrorMessage } from 'formik';
+import { Formik } from 'formik';
 import { Picker } from '@react-native-picker/picker';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Constants from 'expo-constants';
@@ -26,14 +26,13 @@ import { useNavigation } from '@react-navigation/native';
 import { InputForm } from '../../components/Forms/InputForm';
 
 import api from '../../services/api';
-
+import { ContainerModal } from '../../components/Modal';
 import {
   Container,
   Title,
   SubTitle,
   InputArea,
   PickerContainer,
-  ImagePicker as PickerImage,
   ButtonCameraReverse,
   ButtonCamera,
   ViewFlatlist,
@@ -61,12 +60,13 @@ export const Account: React.FC<DateProps> = ({ name, email, handleSubmit }) => {
   const [typePeople, setTypePeople] = useState('Fisica');
 
   //Utilização da camera
-  const camRef = useRef(null);
+  // const camRef = useRef(null);
+  const [cameraRef, setCameraRef]: any = useState(null);
   const [image, setImage] = useState(null);
   const [document, setDocument] = useState(null);
   const [open, setOpen] = useState<boolean>(false);
   const [openCamera, setOpenCamera] = useState(false);
-  const [imageArray, setImageArray] = useState([]);
+  const [imageArray, setImageArray]: any = useState([]);
   const [type, setType] = useState(Camera.Constants.Type.back);
   const [documentArray, setDocumentArray] = useState<string[]>([]);
   const [hasPermission, setHaspermission] = useState<boolean | null>(null);
@@ -139,45 +139,36 @@ export const Account: React.FC<DateProps> = ({ name, email, handleSubmit }) => {
 
   //TIRAR FOTO
   async function _takePicture() {
-    if (camRef) {
-      const data = await camRef.current?.takePictureAsync();
-      setImage(data.uri);
-      setImageArray([...imageArray, data.uri]);
-      setOpen(true);
+    if (cameraRef) {
+      try {
+        const { uri } = await cameraRef.takePictureAsync();
+        setImage(uri);
+        setImageArray([...imageArray, uri]);
+        setOpen(true);
+      } catch (e) {
+        console.log(e);
+      }
     }
-  }
-  {
-    console.log('retorno de imagem tirada ' + image);
+    return;
   }
 
-  // async function _savepickDocument() {
-  //   try {
-  //     await AsyncStorage.setItem('@documents', `${document}`);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-
-  //   Keyboard.dismiss();
-  // }
+  async function _savepickDocument() {
+    try {
+      await AsyncStorage.setItem('@documents', `${document}`);
+    } catch (err) {
+      console.log(err);
+    }
+    Keyboard.dismiss();
+  }
 
   //UTILIZAÇÃO DE DOCUMENTOS
   async function _pickDocument() {
-    let result = await DocumentPicker.getDocumentAsync({
+    let result: any = await DocumentPicker.getDocumentAsync({
       type: 'application/pdf',
       copyToCacheDirectory: true,
     });
     setDocumentArray([...documentArray, result.uri]);
-  }
-
-  //SALVANDO A IMAGEM DEPOIS E CAPTURA-LA
-  async function _savetakePicture() {
-    try {
-      await AsyncStorage.setItem('@image', `${image}`);
-    } catch (err) {
-      console.log(err);
-    }
-
-    Keyboard.dismiss();
+    _savepickDocument();
   }
 
   // REMOVENDO A IMAGEM
@@ -277,7 +268,11 @@ export const Account: React.FC<DateProps> = ({ name, email, handleSubmit }) => {
                           marginTop: 12,
                         }}
                       >
-                        <Camera style={{ flex: 1 }} type={type} ref={camRef}>
+                        <Camera
+                          style={{ flex: 1 }}
+                          type={type}
+                          ref={ref => setCameraRef(ref)}
+                        >
                           <ButtonCameraReverse
                             onPress={() => {
                               setType(
@@ -304,37 +299,13 @@ export const Account: React.FC<DateProps> = ({ name, email, handleSubmit }) => {
                           </ButtonCamera>
 
                           {image && (
-                            <Modal
+                            <ContainerModal
                               animationType="slide"
                               transparent={false}
                               visible={open}
-                            >
-                              <View
-                                style={{
-                                  flex: 1,
-                                  justifyContent: 'center',
-                                  alignItems: 'center',
-                                }}
-                              >
-                                <TouchableOpacity
-                                  onPress={() => setOpen(false)}
-                                >
-                                  <Ionicons
-                                    name="close"
-                                    size={40}
-                                    color="red"
-                                  />
-                                </TouchableOpacity>
-
-                                <TouchableOpacity onPress={_savetakePicture}>
-                                  <Ionicons name="save" size={40} color="red" />
-                                </TouchableOpacity>
-                                <Image
-                                  style={{ width: '100%', height: 300 }}
-                                  source={{ uri: image }}
-                                />
-                              </View>
-                            </Modal>
+                              onPress={() => setOpen(false)}
+                              source={{ uri: image }}
+                            ></ContainerModal>
                           )}
                         </Camera>
                       </SafeAreaView>
