@@ -1,7 +1,7 @@
 import styled from "styled-components/native";
 import { RFValue } from "react-native-responsive-fontsize";
 import { Picker as SelectPicker } from "@react-native-picker/picker";
-
+import { TextInputMask } from 'react-native-masked-text';
 export const Container = styled.View`
   flex: 1;
   justify-content: center;
@@ -20,8 +20,6 @@ export const PickerContainer = styled(SelectPicker)`
   margin-top: ${RFValue(20)}px;
   margin: 12px 12px 12px 12px;
 `;
-
-
 
 export const Title = styled.Text`
   color: ${(props) => (props.primary ? "#632E90" : "#FF4BBF")};
@@ -59,7 +57,7 @@ export const ButtonCameraReverse = styled.TouchableOpacity`
   width: ${RFValue(50)}px;
   justify-content: center;
   border-radius: ${RFValue(15)}px;
-  margin-top: ${RFValue(290)}px;
+  margin-top: ${RFValue(250)}px;
   background-color: ${({ theme }): any => theme.colors.secondary};
 `;
 export const ButtonCamera = styled.TouchableOpacity`
@@ -68,7 +66,7 @@ export const ButtonCamera = styled.TouchableOpacity`
   right: ${RFValue(20)}px;
   width: ${RFValue(50)}px;
   justify-content: center;
-  margin-top: ${RFValue(290)}px;
+  margin-top: ${RFValue(250)}px;
   border-radius: ${RFValue(15)}px;
   background-color: ${({ theme }) => theme.colors.secondary};
 `;
@@ -86,4 +84,12 @@ export const Images = styled.Image`
   border-radius: ${RFValue(10)}px;
   margin: ${RFValue(10)}px;
 `;
+export const MaskInput = styled(TextInputMask)`
+width:${RFValue(85)}%;
+height:${RFValue(50)}px;
+align-self:center;
+padding:${RFValue(8)}px};
+background-color:#9994;
+
+`
 

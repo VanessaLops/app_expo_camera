@@ -17,8 +17,6 @@ import {
   View,
   TouchableOpacity,
   SafeAreaView,
-  Modal,
-  Image,
   Keyboard,
   FlatList,
 } from 'react-native';
@@ -37,11 +35,14 @@ import {
   ButtonCamera,
   ViewFlatlist,
   Images,
+  MaskInput,
 } from './styles';
 
 const schema = Yup.object({
   name: Yup.string().required('Nome é obrigatório'),
   email: Yup.string().email('Email inválido').required('Email requerido'),
+  cpf: Yup.string().required('CPF obrigatório'),
+  // cnpj: Yup.string().required('CNPJ da empresa é obrigatório'),
 });
 
 interface DateProps {
@@ -50,25 +51,25 @@ interface DateProps {
   handleSubmit: () => void;
 }
 
-export const Account: React.FC<DateProps> = ({ name, email, handleSubmit }) => {
+export const Account: React.FC<DateProps> = () => {
   const {
-    // handleSubmit,
+    handleSubmit,
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
+  // const [cpf, setCpf] = useState('');
   const { navigate } = useNavigation<any>();
   const [typePeople, setTypePeople] = useState('Fisica');
-
-  //Utilização da camera
-  // const camRef = useRef(null);
-  const [cameraRef, setCameraRef]: any = useState(null);
   const [image, setImage] = useState(null);
   const [document, setDocument] = useState(null);
-  const [open, setOpen] = useState<boolean>(false);
-  const [openCamera, setOpenCamera] = useState(false);
   const [imageArray, setImageArray]: any = useState([]);
-  const [type, setType] = useState(Camera.Constants.Type.back);
   const [documentArray, setDocumentArray] = useState<string[]>([]);
+
+  const [open, setOpen] = useState<boolean>(false);
+
+  const [cameraRef, setCameraRef]: any = useState(null);
+  const [openCamera, setOpenCamera] = useState(false);
+  const [type, setType] = useState(Camera.Constants.Type.back);
   const [hasPermission, setHaspermission] = useState<boolean | null>(null);
 
   //Carregar dados quando o aplicativo for iniciado
@@ -122,6 +123,8 @@ export const Account: React.FC<DateProps> = ({ name, email, handleSubmit }) => {
       const response = api.post('/store', {
         name: values.name,
         email: values.email,
+        cpf: values.cpf,
+        cnpj: values.cnpj,
         typePeople: typePeople,
         document: document,
         image: image,
@@ -194,7 +197,7 @@ export const Account: React.FC<DateProps> = ({ name, email, handleSubmit }) => {
   return (
     <Container>
       <Formik
-        initialValues={{ name: '', email: '', image: null }}
+        initialValues={{ name: '', email: '', cpf: '', cnpj: '', image: '' }}
         onSubmit={_handleRegister}
         validationSchema={schema}
       >
@@ -224,161 +227,178 @@ export const Account: React.FC<DateProps> = ({ name, email, handleSubmit }) => {
                 </PickerContainer>
               </InputArea>
 
+              <InputArea>
+                <InputForm
+                  value={values.name}
+                  placeholder="Nome"
+                  onChangeText={handleChange('name')}
+                  onBlur={handleBlur('name')}
+                ></InputForm>
+                {errors.name && touched.name ? (
+                  <Text style={{ color: 'red', left: 35 }}>{errors.name}</Text>
+                ) : null}
+              </InputArea>
+              <InputArea>
+                <InputForm
+                  value={values.email}
+                  onChangeText={handleChange('email')}
+                  placeholder="Email *"
+                  onBlur={handleBlur('email')}
+                ></InputForm>
+                {errors.email && touched.email ? (
+                  <Text style={{ color: 'red', left: 35 }}>{errors.email}</Text>
+                ) : null}
+              </InputArea>
               {typePeople === 'Fisica' ? (
-                <>
-                  <InputArea>
-                    <InputForm
-                      value={values.name}
-                      placeholder="Nome"
-                      onChangeText={handleChange('name')}
-                      onBlur={handleBlur('name')}
-                    ></InputForm>
-                    {errors.name && touched.name ? (
-                      <Text style={{ color: 'red' }}>{errors.name}</Text>
-                    ) : null}
-                  </InputArea>
-                  <InputArea>
-                    <InputForm
-                      value={values.email}
-                      onChangeText={handleChange('email')}
-                      placeholder="Email *"
-                      onBlur={handleBlur('email')}
-                    ></InputForm>
-                    {errors.email && touched.email ? (
-                      <Text>{errors.email}</Text>
-                    ) : null}
-                  </InputArea>
+                <InputArea>
+                  <MaskInput
+                    type={'cpf'}
+                    value={values.cpf}
+                    placeholder="CPF*"
+                    onChangeText={handleChange('cpf')}
+                  />
 
-                  <InputArea>
-                    <Button
-                      title="Adicionar Imagem"
-                      onPress={() => setOpenCamera(!openCamera)}
-                    />
-                  </InputArea>
+                  {errors.cpf && touched.cpf ? (
+                    <Text style={{ color: 'red', left: 35 }}>{errors.cpf}</Text>
+                  ) : null}
+                </InputArea>
+              ) : typePeople === 'Juridica' ? (
+                <InputArea>
+                  <MaskInput
+                    type={'cnpj'}
+                    value={values.cnpj}
+                    onChangeText={handleChange('cnpj')}
+                    placeholder="CNPJ"
+                  />
 
-                  {openCamera ? (
-                    <InputArea>
-                      <SafeAreaView
-                        style={{
-                          flex: 1,
-                          width: '100%',
-                          height: 300,
-                          justifyContent: 'center',
-                          alignSelf: 'center',
-                          marginTop: 12,
+                  {errors.cnpj && touched.cnpj ? (
+                    <Text style={{ color: 'red', left: 35 }}>
+                      {errors.cnpj}
+                    </Text>
+                  ) : null}
+                </InputArea>
+              ) : null}
+
+              <InputArea>
+                <Button
+                  title="Adicionar Imagem"
+                  onPress={() => setOpenCamera(!openCamera)}
+                />
+              </InputArea>
+
+              {openCamera ? (
+                <InputArea>
+                  <SafeAreaView
+                    style={{
+                      flex: 1,
+                      width: '100%',
+                      height: 300,
+                      justifyContent: 'center',
+                      alignSelf: 'center',
+                      marginTop: 12,
+                    }}
+                  >
+                    <Camera
+                      style={{ flex: 1 }}
+                      type={type}
+                      ref={ref => setCameraRef(ref)}
+                    >
+                      <ButtonCameraReverse
+                        onPress={() => {
+                          setType(
+                            type === Camera.Constants.Type.front
+                              ? Camera.Constants.Type.back
+                              : Camera.Constants.Type.front,
+                          );
                         }}
                       >
-                        <Camera
-                          style={{ flex: 1 }}
-                          type={type}
-                          ref={ref => setCameraRef(ref)}
-                        >
-                          <ButtonCameraReverse
-                            onPress={() => {
-                              setType(
-                                type === Camera.Constants.Type.front
-                                  ? Camera.Constants.Type.back
-                                  : Camera.Constants.Type.front,
-                              );
-                            }}
-                          >
-                            <Ionicons
-                              name="ios-camera-reverse"
-                              size={24}
-                              color="black"
-                            />
-                          </ButtonCameraReverse>
-
-                          <ButtonCamera>
-                            <Ionicons
-                              name="camera"
-                              size={24}
-                              color="black"
-                              onPress={() => _takePicture()}
-                            />
-                          </ButtonCamera>
-
-                          {image && (
-                            <ContainerModal
-                              animationType="slide"
-                              transparent={false}
-                              visible={open}
-                              onPress={() => setOpen(false)}
-                              source={{ uri: image }}
-                            ></ContainerModal>
-                          )}
-                        </Camera>
-                      </SafeAreaView>
-                      <ViewFlatlist>
-                        {imageArray.length > 0 && (
-                          <>
-                            <View
-                              style={{
-                                height: 142,
-                                width: '100%',
-                              }}
-                            >
-                              <FlatList
-                                keyExtractor={(item, index) => item}
-                                horizontal={true}
-                                data={imageArray}
-                                showsHorizontalScrollIndicator={false}
-                                renderItem={({ item }) => (
-                                  <>
-                                    <TouchableOpacity
-                                      onPress={_removetakePicture}
-                                    >
-                                      <Ionicons
-                                        name="close"
-                                        size={40}
-                                        color="blue"
-                                      />
-                                    </TouchableOpacity>
-                                    <Images source={{ uri: item }} />
-                                  </>
-                                )}
-                              />
-                            </View>
-                          </>
-                        )}
-                      </ViewFlatlist>
-                    </InputArea>
-                  ) : null}
-
-                  <InputArea>
-                    <Button title="Adicionar Arquivo" onPress={_pickDocument} />
-                  </InputArea>
-                  {documentArray.length > 0 && (
-                    <>
-                      <View style={{ height: 145, width: '100%' }}>
-                        <FlatList
-                          horizontal={true}
-                          showsHorizontalScrollIndicator={false}
-                          keyExtractor={(item, index) => {
-                            return item;
-                          }}
-                          data={documentArray}
-                          renderItem={({ item }) => (
-                            <>
-                              <TouchableOpacity onPress={_removepickDocument}>
-                                <Ionicons name="close" size={40} color="blue" />
-                              </TouchableOpacity>
-
-                              <Ionicons
-                                name="clipboard"
-                                size={50}
-                                color="green"
-                              />
-                            </>
-                          )}
+                        <Ionicons
+                          name="ios-camera-reverse"
+                          size={24}
+                          color="black"
                         />
-                      </View>
-                    </>
-                  )}
-                </>
-              ) : typePeople === 'Juridica' ? (
-                <></>
+                      </ButtonCameraReverse>
+
+                      <ButtonCamera>
+                        <Ionicons
+                          name="camera"
+                          size={24}
+                          color="black"
+                          onPress={() => _takePicture()}
+                        />
+                      </ButtonCamera>
+
+                      {image && (
+                        <ContainerModal
+                          animationType="slide"
+                          transparent={false}
+                          visible={open}
+                          onPress={() => setOpen(false)}
+                          source={{ uri: image }}
+                        ></ContainerModal>
+                      )}
+                    </Camera>
+                  </SafeAreaView>
+                  <ViewFlatlist>
+                    {imageArray.length > 0 && (
+                      <>
+                        <View
+                          style={{
+                            height: 142,
+                            width: '100%',
+                          }}
+                        >
+                          <FlatList
+                            keyExtractor={(item, index) => item}
+                            horizontal={true}
+                            data={imageArray}
+                            showsHorizontalScrollIndicator={false}
+                            renderItem={({ item }) => (
+                              <>
+                                <TouchableOpacity onPress={_removetakePicture}>
+                                  <Ionicons
+                                    name="close"
+                                    size={40}
+                                    color="blue"
+                                  />
+                                </TouchableOpacity>
+                                <Images source={{ uri: item }} />
+                              </>
+                            )}
+                          />
+                        </View>
+                      </>
+                    )}
+                  </ViewFlatlist>
+                </InputArea>
               ) : null}
+
+              <InputArea>
+                <Button title="Adicionar Arquivo" onPress={_pickDocument} />
+              </InputArea>
+              {documentArray.length > 0 && (
+                <>
+                  <View style={{ height: 145, width: '100%' }}>
+                    <FlatList
+                      horizontal={true}
+                      showsHorizontalScrollIndicator={false}
+                      keyExtractor={(item, index) => {
+                        return item;
+                      }}
+                      data={documentArray}
+                      renderItem={({ item }) => (
+                        <>
+                          <TouchableOpacity onPress={_removepickDocument}>
+                            <Ionicons name="close" size={40} color="blue" />
+                          </TouchableOpacity>
+
+                          <Ionicons name="clipboard" size={50} color="green" />
+                        </>
+                      )}
+                    />
+                  </View>
+                </>
+              )}
 
               <Button title="Cadastrar" onPress={handleSubmit} />
             </ScrollView>
