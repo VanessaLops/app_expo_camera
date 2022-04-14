@@ -8,10 +8,9 @@ interface Props {
 
 export const Container = styled.View`
   width: ${RFValue(85)}%;
-
-  height: ${RFValue(50)}px;
+  height: ${RFValue(60)}px;
   flex-direction: row;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
   align-self: center;
   border-radius: ${RFValue(12)}px;
 `;
@@ -31,7 +30,7 @@ export const IconContainer = styled.View<Props>`
     `}
 `;
 
-export const InputText = styled(TextInput)<Props>`
+export const InputText = styled(TextInput) <Props>`
   flex: 1;
   background-color: #9994;
   color: #632e90;

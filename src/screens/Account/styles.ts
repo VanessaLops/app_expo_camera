@@ -17,7 +17,7 @@ export const PickerContainer = styled(SelectPicker)`
 
   width: ${RFValue(85)}%;
   border-radius: ${RFValue(15)}px;
-  margin-top: ${RFValue(20)}px;
+  margin-top: ${RFValue(5)}px;
   margin: 12px 12px 12px 12px;
 `;
 
@@ -86,10 +86,11 @@ export const Images = styled.Image`
 `;
 export const MaskInput = styled(TextInputMask)`
 width:${RFValue(85)}%;
-height:${RFValue(50)}px;
+height:${RFValue(60)}px;
 align-self:center;
 padding:${RFValue(8)}px};
 background-color:#9994;
-
+font-size: ${RFValue(14)}px;
+color: #632e90;
 `
 

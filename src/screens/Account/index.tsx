@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { Formik } from 'formik';
 import { Picker } from '@react-native-picker/picker';
 import { yupResolver } from '@hookform/resolvers/yup';
-import Constants from 'expo-constants';
+// import Constants from 'expo-constants';
 import { Camera } from 'expo-camera';
 import * as DocumentPicker from 'expo-document-picker';
 import { Ionicons } from '@expo/vector-icons';
@@ -42,7 +42,6 @@ const schema = Yup.object({
   name: Yup.string().required('Nome é obrigatório'),
   email: Yup.string().email('Email inválido').required('Email requerido'),
   cpf: Yup.string().required('CPF obrigatório'),
-  // cnpj: Yup.string().required('CNPJ da empresa é obrigatório'),
 });
 
 interface DateProps {
@@ -57,13 +56,12 @@ export const Account: React.FC<DateProps> = () => {
     formState: { errors },
   } = useForm({ resolver: yupResolver(schema) });
 
-  // const [cpf, setCpf] = useState('');
   const { navigate } = useNavigation<any>();
   const [typePeople, setTypePeople] = useState('Fisica');
   const [image, setImage] = useState(null);
   const [document, setDocument] = useState(null);
-  const [imageArray, setImageArray]: any = useState([]);
-  const [documentArray, setDocumentArray] = useState<string[]>([]);
+  const [images, setImages]: any = useState([]);
+  const [documents, setDocuments] = useState<string[]>([]);
 
   const [open, setOpen] = useState<boolean>(false);
 
@@ -99,6 +97,7 @@ export const Account: React.FC<DateProps> = () => {
       }
     };
     DocumentLoad();
+    _savepickDocument();
   }, [document]);
 
   //Verifica se o aplicativo tem permissão
@@ -126,8 +125,8 @@ export const Account: React.FC<DateProps> = () => {
         cpf: values.cpf,
         cnpj: values.cnpj,
         typePeople: typePeople,
-        document: document,
-        image: image,
+        documents: documents,
+        images: images,
       });
       navigate('Confirmation', {
         title: 'Conta criada!',
@@ -146,7 +145,7 @@ export const Account: React.FC<DateProps> = () => {
       try {
         const { uri } = await cameraRef.takePictureAsync();
         setImage(uri);
-        setImageArray([...imageArray, uri]);
+        setImages([...images, uri]);
         setOpen(true);
       } catch (e) {
         console.log(e);
@@ -170,28 +169,25 @@ export const Account: React.FC<DateProps> = () => {
       type: 'application/pdf',
       copyToCacheDirectory: true,
     });
-    setDocumentArray([...documentArray, result.uri]);
-    _savepickDocument();
+    setDocuments([...documents, result.uri]);
   }
 
   // REMOVENDO A IMAGEM
   async function _removetakePicture(imageKey) {
-    const newImage = [...imageArray];
-    const todoImage = imageArray.findIndex(
-      deleteImage => deleteImage === imageKey,
-    );
+    const newImage = [...images];
+    const todoImage = images.findIndex(deleteImage => deleteImage === imageKey);
     newImage.splice(todoImage, 1);
-    setImageArray(newImage);
+    setImages(newImage);
   }
 
   // REMOVENDO DOCUMENTO
   async function _removepickDocument(documentKey) {
-    const newDocument = [...documentArray];
-    const todoDocument = documentArray.findIndex(
+    const newDocument = [...documents];
+    const todoDocument = documents.findIndex(
       deleteDocument => deleteDocument === documentKey,
     );
     newDocument.splice(todoDocument, 1);
-    setDocumentArray(newDocument);
+    setDocuments(newDocument);
   }
 
   return (
@@ -340,7 +336,7 @@ export const Account: React.FC<DateProps> = () => {
                     </Camera>
                   </SafeAreaView>
                   <ViewFlatlist>
-                    {imageArray.length > 0 && (
+                    {images.length > 0 && (
                       <>
                         <View
                           style={{
@@ -351,7 +347,7 @@ export const Account: React.FC<DateProps> = () => {
                           <FlatList
                             keyExtractor={(item, index) => item}
                             horizontal={true}
-                            data={imageArray}
+                            data={images}
                             showsHorizontalScrollIndicator={false}
                             renderItem={({ item }) => (
                               <>
@@ -376,7 +372,7 @@ export const Account: React.FC<DateProps> = () => {
               <InputArea>
                 <Button title="Adicionar Arquivo" onPress={_pickDocument} />
               </InputArea>
-              {documentArray.length > 0 && (
+              {documents.length > 0 && (
                 <>
                   <View style={{ height: 145, width: '100%' }}>
                     <FlatList
@@ -385,7 +381,7 @@ export const Account: React.FC<DateProps> = () => {
                       keyExtractor={(item, index) => {
                         return item;
                       }}
-                      data={documentArray}
+                      data={documents}
                       renderItem={({ item }) => (
                         <>
                           <TouchableOpacity onPress={_removepickDocument}>

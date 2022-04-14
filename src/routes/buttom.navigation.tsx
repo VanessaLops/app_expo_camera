@@ -1,13 +1,9 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Dashboard from "../screens/Dashboard";
-import Alert from "../screens/Alert";
-import Config from "../screens/Config";
-import { Feather } from "@expo/vector-icons";
+import {Dashboard} from "../screens/Dashboard";
 import { EvilIcons } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { Entypo } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
+
+
 const Tab = createBottomTabNavigator();
 
 // Interface

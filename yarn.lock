@@ -1104,7 +1104,7 @@
     xcode "^3.0.1"
     xml2js "0.4.23"
 
-"@expo/config-plugins@4.1.0", "@expo/config-plugins@^4.0.14", "@expo/config-plugins@^4.0.2":
+"@expo/config-plugins@4.1.0", "@expo/config-plugins@^4.0.2":
   version "4.1.0"
   resolved "https://registry.npmjs.org/@expo/config-plugins/-/config-plugins-4.1.0.tgz"
   integrity sha512-+Uq7kzi1StUZZZivnnqNV6+v8b+SMF6MDgH+cEZxCoM9uwLXOK0rTAURzBGtl+C6EEbKnoZmnKGuzABBGPRP7A==
@@ -1548,7 +1548,7 @@
 
 "@react-navigation/elements@^1.3.3":
   version "1.3.3"
-  resolved "https://registry.yarnpkg.com/@react-navigation/elements/-/elements-1.3.3.tgz#9f56b650a9a1a8263a271628be7342c8121d1788"
+  resolved "https://registry.npmjs.org/@react-navigation/elements/-/elements-1.3.3.tgz"
   integrity sha512-Lv2lR7si5gNME8dRsqz57d54m4FJtrwHRjNQLOyQO546ZxO+g864cSvoLC6hQedQU0+IJnPTsZiEI2hHqfpEpw==
 
 "@react-navigation/native@^6.0.8":
@@ -1568,9 +1568,9 @@
   dependencies:
     nanoid "^3.1.23"
 
-"@react-navigation/stack@^6.1.1":
+"@react-navigation/stack@^6.2.1":
   version "6.2.1"
-  resolved "https://registry.yarnpkg.com/@react-navigation/stack/-/stack-6.2.1.tgz#2b14473579eced6def5cca06860044d60e59d06e"
+  resolved "https://registry.npmjs.org/@react-navigation/stack/-/stack-6.2.1.tgz"
   integrity sha512-JI7boxtPAMCBXi4VJHVEq61jLVHFW5f3npvbndS+XfOsv7Gf0f91HOVJ28DS5c2Fn4+CO4AByjUozzlN296X+A==
   dependencies:
     "@react-navigation/elements" "^1.3.3"
@@ -2876,41 +2876,6 @@ expo-crypto@~10.1.0:
   resolved "https://registry.npmjs.org/expo-crypto/-/expo-crypto-10.1.2.tgz"
   integrity sha512-TYaBtV9oK5OH+EfsAUHQkWkRPifZjCMDn6Yf9gk3/LyHdJHDYnB6NQWTJo9Qkl6vzI9svQ6PMnQTm2Yxrb3ZfQ==
 
-expo-dev-client@^0.8.4:
-  version "0.8.4"
-  resolved "https://registry.npmjs.org/expo-dev-client/-/expo-dev-client-0.8.4.tgz"
-  integrity sha512-FB5ouz9dMyccnuYbuAi0EcTNdRh+5vPGuOuhYWo5Fq3SBTU8ZdKQmcMidAoHOrYgMzQWiT+S7ypt0AjxPSgHnA==
-  dependencies:
-    "@expo/config-plugins" "^4.0.14"
-    expo-dev-launcher "0.10.4"
-    expo-dev-menu "0.9.3"
-    expo-dev-menu-interface "0.5.3"
-    expo-manifests "~0.2.2"
-    expo-updates-interface "~0.5.0"
-
-expo-dev-launcher@0.10.4:
-  version "0.10.4"
-  resolved "https://registry.npmjs.org/expo-dev-launcher/-/expo-dev-launcher-0.10.4.tgz"
-  integrity sha512-ItqkxzzwgeK4+o9hyV3/YAvPxiVIXtcOWPcjpuPxYDtLigF4D4sMSqRb1aBA+7Nmxoc6EuLASZnvge0WPco+cA==
-  dependencies:
-    "@expo/config-plugins" "^4.0.14"
-    expo-dev-menu "0.9.3"
-    resolve-from "^5.0.0"
-    semver "^7.3.5"
-
-expo-dev-menu-interface@0.5.3:
-  version "0.5.3"
-  resolved "https://registry.npmjs.org/expo-dev-menu-interface/-/expo-dev-menu-interface-0.5.3.tgz"
-  integrity sha512-i1d7vtKILnq7mo6r5jSQ++UxkpP+VX/IkOAKuWGeB/B32pCTFCD32rplymFS3qPQ+vlmb5zKl5yhYSYZSVobhg==
-
-expo-dev-menu@0.9.3:
-  version "0.9.3"
-  resolved "https://registry.npmjs.org/expo-dev-menu/-/expo-dev-menu-0.9.3.tgz"
-  integrity sha512-ZUCDSO2rAhFOKuCXdwBf09VVkvAqZBhjA36b7YkwfvKxQ4nb6ZbB/JRCdtxLcre5hDJX1ya3YMNPY3R0/WCBbg==
-  dependencies:
-    "@expo/config-plugins" "^4.0.14"
-    expo-dev-menu-interface "0.5.3"
-
 expo-document-picker@~10.1.3:
   version "10.1.3"
   resolved "https://registry.npmjs.org/expo-document-picker/-/expo-document-picker-10.1.3.tgz"
@@ -2947,11 +2912,6 @@ expo-image-picker@~12.0.1:
     "@expo/config-plugins" "^4.0.2"
     uuid "7.0.2"
 
-expo-json-utils@~0.2.0:
-  version "0.2.1"
-  resolved "https://registry.npmjs.org/expo-json-utils/-/expo-json-utils-0.2.1.tgz"
-  integrity sha512-wU7gXGtaUlyxFLTp5e3PbnJB90/92r6gEc2BuMHdqE0OxhTQKyKzRszk2szCsdkeI7L4XntvZhCs1Px+gL1gvA==
-
 expo-keep-awake@~10.0.2:
   version "10.0.2"
   resolved "https://registry.npmjs.org/expo-keep-awake/-/expo-keep-awake-10.0.2.tgz"
@@ -2966,13 +2926,6 @@ expo-linking@~3.0.0:
     invariant "^2.2.4"
     qs "^6.9.1"
     url-parse "^1.4.4"
-
-expo-manifests@~0.2.2:
-  version "0.2.4"
-  resolved "https://registry.npmjs.org/expo-manifests/-/expo-manifests-0.2.4.tgz"
-  integrity sha512-8PrMPyvElKXflYd1ApDHJR9JF0SR996iVEVQgHAMLzVP7OqEAM6dQaFeqrRqVn/DSsxEWkJTpxv8WJ5NWrT4Lg==
-  dependencies:
-    expo-json-utils "~0.2.0"
 
 expo-modules-autolinking@0.5.5, expo-modules-autolinking@~0.5.1:
   version "0.5.5"
@@ -3012,11 +2965,6 @@ expo-status-bar@~1.2.0:
   version "1.2.0"
   resolved "https://registry.npmjs.org/expo-status-bar/-/expo-status-bar-1.2.0.tgz"
   integrity sha512-pVZZ/kDCXFK79E4dCtRecs3XLC8aiwlciutSd/fFmUPJSQZ1Txia6hlKajPt0GAYft8/YnT0V3URXzWZOBniYQ==
-
-expo-updates-interface@~0.5.0:
-  version "0.5.1"
-  resolved "https://registry.npmjs.org/expo-updates-interface/-/expo-updates-interface-0.5.1.tgz"
-  integrity sha512-RLvC69o1BkhHP6hNaWiIvSiTgXABB9v4HnoietoXKFHlAyxlQCupy6ki164KpZNrOS/PFJ2WWqZOvKfiyDVO+w==
 
 expo-web-browser@~10.1.0:
   version "10.1.1"
@@ -3836,7 +3784,7 @@ joi@^17.2.1:
 
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
-  resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
+  resolved "https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz"
   integrity sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==
 
 js-yaml@^3.13.1:
