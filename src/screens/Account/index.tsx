@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
 import * as Yup from 'yup';
-import { useForm } from 'react-hook-form';
+// import { useForm } from 'react-hook-form';
 import { Formik } from 'formik';
 import { Picker } from '@react-native-picker/picker';
-import { yupResolver } from '@hookform/resolvers/yup';
+// import { yupResolver } from '@hookform/resolvers/yup';
 // import Constants from 'expo-constants';
 import { Camera } from 'expo-camera';
 import * as DocumentPicker from 'expo-document-picker';
@@ -51,10 +51,10 @@ interface DateProps {
 }
 
 export const Account: React.FC<DateProps> = () => {
-  const {
-    handleSubmit,
-    formState: { errors },
-  } = useForm({ resolver: yupResolver(schema) });
+  // const {
+  //   handleSubmit,
+  //   formState: { errors },
+  // } = useForm({ resolver: yupResolver(schema) });
 
   const { navigate } = useNavigation<any>();
   const [typePeople, setTypePeople] = useState('Fisica');
