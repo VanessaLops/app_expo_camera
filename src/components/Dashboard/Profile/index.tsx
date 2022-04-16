@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Avatar, Container } from './styles';
 import { useAuth } from '../../../context/auth';
 export const Profile: React.FC = () => {
@@ -7,6 +7,7 @@ export const Profile: React.FC = () => {
   return (
     <Container>
       <Avatar source={{ uri: user.photo }} />
+    
     </Container>
   );
 };
