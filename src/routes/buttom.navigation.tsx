@@ -37,12 +37,12 @@ const BottomTabs = () => {
           <Tab.Screen
         options={{
           tabBarLabel: 'Empresas',
-          headerShown: true,
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <Octicons color={color} size={25} name="home" />
           ),
         }}
-        name="Empresas"
+        name="Informações das Empresas"
         component={Companies}
       />
     </Tab.Navigator>
