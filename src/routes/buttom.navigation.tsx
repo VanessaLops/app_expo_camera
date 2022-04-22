@@ -1,6 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Dashboard } from '../screens/Dashboard';
+import { Companies } from '../screens/Companies';
 import { Octicons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
@@ -32,6 +33,17 @@ const BottomTabs = () => {
         }}
         name="Inicio"
         component={Dashboard}
+      />
+          <Tab.Screen
+        options={{
+          tabBarLabel: 'Empresas',
+          headerShown: true,
+          tabBarIcon: ({ color }) => (
+            <Octicons color={color} size={25} name="home" />
+          ),
+        }}
+        name="Empresas"
+        component={Companies}
       />
     </Tab.Navigator>
   );

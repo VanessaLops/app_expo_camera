@@ -27,8 +27,6 @@ export const Card: React.FC<UserProps> = () => {
 
         <Title>Informações da Empresa Cadastrada</Title>
       </Container>
-
-      <Title>Informações da Empresa Cadastrada</Title>
       {console.log('retorno -- >' + users.length)}
     </CardContainer>
   );

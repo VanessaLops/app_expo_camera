@@ -68,7 +68,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         };
         setUser(userLogged);
 
-        await AsyncStorage.setItem('@mobile:user', JSON.stringify(userLogged));
+        await AsyncStorage.setItem('@mobile:user', JSON.stringify('teste => ' + userLogged));
       }
     } catch (error) {
       throw new Error('error' + error);

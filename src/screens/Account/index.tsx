@@ -9,7 +9,8 @@ import { Picker } from '@react-native-picker/picker';
 import { Camera } from 'expo-camera';
 import * as DocumentPicker from 'expo-document-picker';
 import { Ionicons } from '@expo/vector-icons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+ import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { Button } from '../../components/Forms/Button';
 import {
   ScrollView,
